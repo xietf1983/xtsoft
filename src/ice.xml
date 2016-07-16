@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GB2312"?>
+<IceProps>
+	<MssWeb.Proxy needReboot="true" value="MssWeb:tcp -h 192.168.1.3 -p 7122" comment="存储查询服务"/>
+    <Soa2TrackedApp.Endpoints needReboot="true" value="tcp -h 0.0.0.0 -p 7430" comment="soa通知到告警客户端"/>
+    
+	<Ice.ThreadPool.Server.SizeMax needReboot="true" value="20" comment="服务端线程最大值"/>
+	<Ice.ThreadPool.Server.Size needReboot="true" value="5" comment="初始线程/最小线程"/>
+	
+	<Ice.ThreadPool.Client.SizeMax needReboot="true" value="20" comment="客户端线程最大值"/>
+	<Ice.ThreadPool.Client.Size needReboot="true" value="5" comment="客户端初始线程/最小线程,客户端线程用于ice回调和ami调用"/>
+	
+	<Ice.Override.Timeout needReboot="true" value="20000" comment="调用超时，ConnectTimeout的默认值，60000为一分钟，-1 for no timeout，If set, this property overrides timeout settings in all endpoints."/>
+	<Ice.Override.ConnectTimeout needReboot="true" value="1000" comment="连接超时，60000为一分钟，-1 for no timeout，If set, this property overrides timeout settings in all endpoints."/>
+	
+	<Ice.ACM.Client needReboot="true" value="0" comment="default60 是否关闭空闲连接.0否，大于零表示空闲多少秒关闭"/>
+	<Ice.ACM.Server needReboot="true" value="0" comment="default0 是否关闭空闲连接.0否，大于零表示空闲多少秒关闭Server-side ACM can cause incoming oneway requests to be silently discarded."/>
+	
+	<Ice.MessageSizeMax needReboot="true" value="5120" comment="default1024 最大消息(包括ice协议头部)，单位KB"/>
+	
+	<Ice.RetryIntervals needReboot="true" value="-1" comment="0 100 500，可重试操作失败将重试3 次：在第一次失败时立刻重试，在第二次失败后等待100 (ms)，在第三次失败后等待500 (ms)，-1不进行重试"/>
+	<Ice.Warn.Connections needReboot="true" value="1" comment="Warn about connection exceptions"/>
+	<!--Network Tracing-->
+	<Ice.Trace.Network needReboot="true" value="1" comment="0 = no network tracing，1 = trace connection establishment and closure，2 = like 1, but more detailed，3 = like 2, but also trace data transfer"/>
+	
+	<!--Protocol Tracing-->
+	<Ice.Trace.Protocol needReboot="true" value="0" comment="0 = no protocol tracing，1 = trace protocol messages"/>
+</IceProps>

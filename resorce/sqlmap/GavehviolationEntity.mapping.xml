@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtsoft.business.event.entity.EventPersistenceEntity">
+	<delete id="gavehviolation_delete"
+	parameterType="com.xtsoft.model.GavehviolationEntity">
+	delete from GAVEHVIOLATIONUPLOAD where ALARMID = #{alarmId}
+	</delete>
+	<insert id="gaVehViolationUploadFail_insert"
+	parameterType="com.xtsoft.model.GavehviolationEntity">
+		<![CDATA[
+		INSERT INTO GAVEHVIOLATIONUPLOADFAIL
+		(ALARMID, FDID, CHANNELTYPE, CHANNELID,CHANNELNAME,
+		DETAIL, CENTERSTOREKEY, STORAGEAREAID,  PLATENO,
+		PLATETYPE, PLATECOLOR,  PLATECHARACTERCOLOR, VEHICLECOLOR,
+		VEHICLETYPE, VEHICLELONG,  RECORDEDSPEED, SPEEDMIN,
+		SPEEDMAX,  MONITORLOCATIONID,  MONITORLOCATIONNAME,  VEHICLEFROM,
+		VEHICLECHANNEL,  LONGITUDE,  LATITUDE,  VIOLATIONCODE,
+		VIOLATIONCODE2,  REDLIGHTBEGINTIME,  REDLIGHTLAST,  DEALSTATUS,
+		DEALER,  DEALTIME,  MEMO, CREATEDATE)
+		SELECT  ALARMID, FDID, CHANNELTYPE, CHANNELID,CHANNELNAME,
+		DETAIL, CENTERSTOREKEY, STORAGEAREAID,  PLATENO,
+		PLATETYPE, PLATECOLOR,  PLATECHARACTERCOLOR, VEHICLECOLOR,
+		VEHICLETYPE, VEHICLELONG,  RECORDEDSPEED, SPEEDMIN,
+		SPEEDMAX,  MONITORLOCATIONID,  MONITORLOCATIONNAME,  VEHICLEFROM,
+		VEHICLECHANNEL,  LONGITUDE,  LATITUDE,  VIOLATIONCODE,
+		VIOLATIONCODE2,  REDLIGHTBEGINTIME,  REDLIGHTLAST,  DEALSTATUS,
+		DEALER,  DEALTIME,  MEMO, CREATEDATE
+		FROM GAVEHVIOLATIONUPLOAD WHERE ALARMID=#{alarmId}
+		]]>
+	</insert>
+	<select id="queryMaxGavehviolationAlarmId" resultType="java.lang.Long"  parameterType="com.xtsoft.kernel.base.persistence.QueryParameter">
+		<![CDATA[
+		SELECT  MAX(ALARMID) FROM  GAVEHVIOLATIONUPLOAD
+		]]>
+	</select>
+	<insert id="gaVehViolation_update"
+	parameterType="com.xtsoft.model.GavehviolationEntity">
+		<![CDATA[
+		update  GAVEHVIOLATION  set DEALSTATUS =1 WHERE ALARMID=#{alarmId}
+		]]>
+	</insert>
+	<select id="queryGavehviolationMinAlarmId" resultType="java.lang.Long"  parameterType="com.xtsoft.kernel.base.persistence.QueryParameter">
+		<![CDATA[
+		 SELECT  Min(ALARMID) FROM  GAVEHVIOLATIONUPLOAD
+		]]>
+	</select>
+	<select id="queryGavehviolationList" resultType="com.xtsoft.model.GavehviolationEntity"  parameterType="com.xtsoft.kernel.base.persistence.QueryParameter">
+		<![CDATA[
+		SELECT T.ALARMID,
+		T.FDID,
+		T.CHANNELID,
+		T.CHANNELTYPE,ALARMTIME,
+		TO_CHAR(T.ALARMTIME, 'YYYY-MM-DD HH24:MI:SS') ALARMTIMESTR,DEALTIME,
+		T.CENTERSTOREKEY,
+		T.STORAGEAREAID,
+		T.PLATENO,
+		T.PLATETYPE,
+		T.RECORDEDSPEED,
+		T.SPEEDMAX,
+		T.REDLIGHTBEGINTIME,
+		T.REDLIGHTLAST,
+		T.VIOLATIONCODE,VEHICLEFROM,
+		T.MONITORLOCATIONNAME,
+		T.ALARMTIME,
+		(SELECT V.DESCRIBETION
+		FROM GAVIOLATIONCODE V
+		WHERE V.CODE = T.VIOLATIONCODE
+		AND ROWNUM = 1) AS VIOLATIONNAME
+		FROM GAVEHVIOLATIONUPLOAD T
+		WHERE   ALARMID>=#{parameter.START} and   ALARMID<=#{parameter.END} and PLATENO not in (select PLATENO from  PLATENOWHITELIST)
+		]]>
+	</select>
+</mapper>

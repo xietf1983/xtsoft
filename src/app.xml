@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="GB2312" standalone="no"?>
+<appProps>
+	<defaultcustom_ip comment="调度是否启用双网卡配置" needReboot="true" value="172.16.0.0"/>
+	<netWork_double comment="调度是否启用双网卡配置" needReboot="true" value="true"/>
+	<before_day comment="发生3天前的数据" needReboot="true" value="3"/>
+	<try_times comment="重试次数" needReboot="true" value="30"/>
+	<main_dir   comment="重试次数" needReboot="true" value="d:\\Image\zjly"/>
+	<store_type comment="存储选项:NAS/SSU。摄像头划归到存储区的用SSU,否则用NAS" needReboot="true" value="SSU"/>
+	 <photoRs>
+        <photoRsNode domain="" name="10.121" value="http://172.16.70.224:9001/PhotoRS/" comment="多个域号用逗号(,)隔开,name对应的是单个IP及IP段,value对应的是图片代理服务器地址"/>
+        <photoRsNode domain="200000" name="172.16.62.10" value="http://172.16.70.224:9001/PhotoRS/" comment="多个域号用逗号隔开,name对应的是单个IP及IP段,value对应的是图片代理服务器地址"/>
+        <photoRsNode domain="200000" name="172.16.62.1-172.25.62.9" value="http://172.16.70.224:9001/PhotoRS/" comment="多个域号用逗号隔开,name对应的是单个IP及IP段,value对应的是图片代理服务器地址"/>
+    </photoRs>
+</appProps>
